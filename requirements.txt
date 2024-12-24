@@ -10,7 +10,7 @@ catboost
 xgboost
 mlflow
 dagshub
-#Flask
-#gunicorn
+Flask
+gunicorn
 
 #-e .

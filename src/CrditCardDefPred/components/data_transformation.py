@@ -24,7 +24,7 @@ class DataTransformation:
     def __init__(self):
         self.data_transformation_config = DataTransformationConfig()
 
-    def get_data_transformer_object(self,df):
+    def get_data_transformer_object(self):
         """
         This function constructs a preprocessing object with pipelines for both
         categorical and numerical data transformations.
@@ -39,7 +39,7 @@ class DataTransformation:
         try:
             # Identify categorical and numerical columns
             enco_columns = ['SEX', 'EDUCATION', 'MARRIAGE', 'PAY_0', 'PAY_2', 'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6']
-            unenco_columns = [col for col in df.columns if col not in enco_columns and col != 'default_payment_next_month']
+            unenco_columns = ['LIMIT_BAL','AGE','BILL_AMT1','BILL_AMT2','BILL_AMT3','BILL_AMT4','BILL_AMT5','BILL_AMT6','PAY_AMT1','PAY_AMT2','PAY_AMT3','PAY_AMT4','PAY_AMT5','PAY_AMT6']
 
             # Pipelines for numerical and categorical columns
             unenco_columns_pipeline = Pipeline(steps=[
@@ -90,16 +90,10 @@ class DataTransformation:
                 df['EDUCATION'] = np.where(df['EDUCATION'].isin([0, 5, 6]), 4, df['EDUCATION'])
                 df['MARRIAGE'] = np.where(df['MARRIAGE'] == 0, 3, df['MARRIAGE'])
 
-                df.replace({
-                    'SEX': {1: 'MALE', 2: 'FEMALE'},
-                    'EDUCATION': {1: 'graduate school', 2: 'university', 3: 'high school', 4: 'others'},
-                    'MARRIAGE': {1: 'married', 2: 'single', 3: 'others'}
-                }, inplace=True)
-
                 df.drop(columns=['ID'], inplace=True, errors="ignore")
 
             # # Get preprocessor
-            preprocessing_obj = self.get_data_transformer_object(train_df)
+            preprocessing_obj = self.get_data_transformer_object()
 
             target_column_name = "default_payment_next_month"
 
