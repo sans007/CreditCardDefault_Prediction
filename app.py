@@ -4,6 +4,10 @@ import pandas as pd
 
 from sklearn.preprocessing import StandardScaler
 from src.CrditCardDefPred.pipelines.prediction_pipeline import CustomData,PredictPipeline
+from src.CrditCardDefPred.logger import logging
+from src.CrditCardDefPred.exception import CustomException
+import sys
+
 
 
 application = Flask(__name__)
@@ -18,7 +22,9 @@ def index():
 # Route for prediction
 @app.route('/predictdata', methods=['POST'])
 def predict_datapoint():
-    if request.method == 'POST':
+
+    try:
+     if request.method == 'POST':
             # Gather data from form inputs
             data = CustomData(
                 LIMIT_BAL=float(request.form.get('LIMIT_BAL')),
@@ -49,17 +55,25 @@ def predict_datapoint():
             # Convert input data to DataFrame
             pred_df = data.get_data_as_data_frame()
             print("Input DataFrame:\n", pred_df)
+            logging.info("Input DataFrame completed")
 
             # Load prediction pipeline and make prediction
             predict_pipeline = PredictPipeline()
             print("Starting prediction...")
+            logging.info("Prediction started")
             results = predict_pipeline.predict(pred_df)
             print("Prediction Results:", results)
+            logging.info("Prediction result in numeric started")
 
             result = "Have Default next month" if results[0] == 1 else "Have No default next month"
+            logging.info("Prediction completed")
 
             # Pass the result to the template
             return render_template('index.html', results=result)
+            
+     
+    except Exception as e:
+        raise CustomException(e,sys)
 
 
 
