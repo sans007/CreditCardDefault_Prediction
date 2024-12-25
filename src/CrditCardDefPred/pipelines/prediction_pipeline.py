@@ -27,14 +27,6 @@ class PredictPipeline:
             print("Are there missing values?", features.isnull().sum())
             print("Data types of input features:", features.dtypes)
 
-            # Get the categories for the first column
-            encoder = preprocessor.named_transformers_['enco_columns_pipeline'].named_steps['one_hot_encoder']
-            known_categories = encoder.categories_[0]  # Categories for column 0
-
-            # Find values in column 0 of `features` that are not in known categories
-            unknown_values = set(features.iloc[:, 0]) - set(known_categories)
-            print("Unknown categories in column 0:", unknown_values)
-
             # Preprocess the input features
             data_scaled = preprocessor.transform(features)
             print("Transformation successful!")
@@ -112,7 +104,7 @@ class CustomData:
                 "PAY_AMT6": [self.PAY_AMT6],
             }
 
-            print(234,custom_data_input_dict)
+            print(custom_data_input_dict)
 
             return pd.DataFrame(custom_data_input_dict)
 
