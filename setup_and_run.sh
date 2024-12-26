@@ -12,5 +12,5 @@ echo "Running setup.py to create preprocessor.pkl and model.pkl..."
 python main.py
 
 # Start the prediction API service
-echo "Starting the prediction service..."
-python app.py
+# echo "Starting the prediction service..."
+# python app.py
