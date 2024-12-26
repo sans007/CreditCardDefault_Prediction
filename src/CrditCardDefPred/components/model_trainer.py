@@ -105,49 +105,49 @@ class ModelTrainer:
             
 
             
-            # Train the best model on the full training set
-            best_model.set_params(**best_model_params)
-            best_model.fit(X_train, y_train)
+            # # Train the best model on the full training set
+            # best_model.set_params(**best_model_params)
+            # best_model.fit(X_train, y_train)
 
             
-            mlflow
-            dagshub.init(repo_owner='sans007', repo_name='CreditCardDefault_Prediction', mlflow=True)
-            mlflow.set_registry_uri("https://dagshub.com/sans007/CreditCardDefault_Prediction.mlflow")
-            tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+            # mlflow
+            # dagshub.init(repo_owner='sans007', repo_name='CreditCardDefault_Prediction', mlflow=True)
+            # mlflow.set_registry_uri("https://dagshub.com/sans007/CreditCardDefault_Prediction.mlflow")
+            # tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
-            mlflow
+            # mlflow
 
-            with mlflow.start_run():
+            # with mlflow.start_run():
 
-                predicted_qualities = best_model.predict(X_test)
+            #     predicted_qualities = best_model.predict(X_test)
 
-                # Evaluate the model's performance
-                Accuracy_score,Precision_score,Recall_score,F1_score = self.eval_metrics(y_test, predicted_qualities)
+            #     # Evaluate the model's performance
+            #     Accuracy_score,Precision_score,Recall_score,F1_score = self.eval_metrics(y_test, predicted_qualities)
 
-                mlflow.log_params(best_model_params)
+            #     mlflow.log_params(best_model_params)
 
-                mlflow.log_metric("Accuracy", Accuracy_score)
-                mlflow.log_metric("Precision", Precision_score)
-                mlflow.log_metric("Recall", Recall_score)
-                mlflow.log_metric("F1", F1_score)
+            #     mlflow.log_metric("Accuracy", Accuracy_score)
+            #     mlflow.log_metric("Precision", Precision_score)
+            #     mlflow.log_metric("Recall", Recall_score)
+            #     mlflow.log_metric("F1", F1_score)
                 
 
 
-                # Model registry does not work with file store
-                if tracking_url_type_store != "file":
+            #     # Model registry does not work with file store
+            #     if tracking_url_type_store != "file":
 
-                    # Register the model
-                    # There are other ways to use the Model Registry, which depends on the use case,
-                    # please refer to the doc for more information:
-                    # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-                    mlflow.sklearn.log_model(best_model, "model", registered_model_name=best_model_name)
-                else:
-                    mlflow.sklearn.log_model(best_model, "model")
+            #         # Register the model
+            #         # There are other ways to use the Model Registry, which depends on the use case,
+            #         # please refer to the doc for more information:
+            #         # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+            #         mlflow.sklearn.log_model(best_model, "model", registered_model_name=best_model_name)
+            #     else:
+            #         mlflow.sklearn.log_model(best_model, "model")
 
 
-            if best_model_score<0.6:
-                raise CustomException("No best model found")
-            logging.info(f"Best found model on both training and testing dataset")
+            # if best_model_score<0.6:
+            #     raise CustomException("No best model found")
+            # logging.info(f"Best found model on both training and testing dataset")
 
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
