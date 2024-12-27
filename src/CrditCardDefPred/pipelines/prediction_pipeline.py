@@ -11,8 +11,10 @@ class PredictPipeline:
 
     def predict(self, features):
         try:
-            model_path = os.path.join("artifacts", "model.pkl")
-            preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
+            # model_path = os.path.join("artifacts", "model.pkl")
+            # preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
+            model_path = os.path.join("deployment_script", "model.pkl")
+            preprocessor_path = os.path.join("deployment_script", "preprocessor.pkl")
             print("Before Loading")
             
             # Load model and preprocessor
@@ -33,6 +35,7 @@ class PredictPipeline:
             
             # Make predictions
             preds = model.predict(data_scaled)
+            print("Predictions")
             return preds
 
         except Exception as e:
