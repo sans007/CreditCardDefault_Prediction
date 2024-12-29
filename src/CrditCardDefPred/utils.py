@@ -6,6 +6,7 @@ import pandas as pd
 from dotenv import load_dotenv
 import pymysql
 import pickle
+import gzip
 
 from sklearn.metrics import accuracy_score,precision_score,recall_score,f1_score
 from sklearn.model_selection import RandomizedSearchCV
@@ -42,7 +43,7 @@ def save_object(file_path, obj):
 
         os.makedirs(dir_path, exist_ok=True)
 
-        with open(file_path,"wb") as file_obj:
+        with gzip.open(file_path,"wb") as file_obj:
             pickle.dump(obj,file_obj)
 
     except Exception as e:
@@ -109,7 +110,7 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, params):
 
 def load_object(file_path):
     try:
-        with open(file_path, "rb") as file_obj:
+        with gzip.open(file_path, "rb") as file_obj:
             return pickle.load(file_obj)
 
     except Exception as e:
