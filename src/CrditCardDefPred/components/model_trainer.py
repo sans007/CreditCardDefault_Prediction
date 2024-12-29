@@ -65,8 +65,8 @@ class ModelTrainer:
             # Define hyperparameters for RandomizedSearchCV
             params = {
                 "Random Forest": {
-                    "max_depth": [5, 8, 15, None],
-                    "max_features": [5, 7, "sqrt", 8],
+                    "max_depth": [5, 8, None],
+                    "max_features": [5, 7, "sqrt"],
                     "min_samples_split": [2, 8, 15],
                     "n_estimators": [100, 200, 500]
 
