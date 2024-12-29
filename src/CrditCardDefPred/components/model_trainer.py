@@ -65,19 +65,24 @@ class ModelTrainer:
             # Define hyperparameters for RandomizedSearchCV
             params = {
                 "Random Forest": {
-                    "max_depth": [5, 8, 15, None],
-                    "max_features": [5, 7, "sqrt", 8],
-                    "min_samples_split": [2, 8, 15, 20],
-                    "n_estimators": [100, 200, 500, 1000]
+                    # "max_depth": [5, 8, 15, None],
+                    # "max_features": [5, 7, "sqrt", 8],
+                    # "min_samples_split": [2, 8, 15, 20],
+                    # "n_estimators": [100, 200, 500, 1000]
+
+                    "max_depth": [5, 8, 15],
+                    "max_features": ["sqrt", 5],
+                    "min_samples_split": [2, 8],
+                    "n_estimators": [100, 200]
                 },
                 "Decision Tree": {
                     "criterion": ["gini", "entropy"],
-                    "max_depth": [None, 10, 20, 30]
+                    # "max_depth": [None, 10, 20, 30]
                 },
                 "XGBClassifier": {
                     "learning_rate": [0.1, 0.01, 0.05],
                     "n_estimators": [8, 16, 32, 64, 128],
-                    "max_depth": [3, 5, 7],
+                    # "max_depth": [3, 5, 7],
                 },
                 "AdaBoost Classifier": {
                     "n_estimators": [8, 16, 32, 64, 128],

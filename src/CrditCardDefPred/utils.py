@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 import pymysql
 import pickle
 import gzip
+import joblib
+
 
 from sklearn.metrics import accuracy_score,precision_score,recall_score,f1_score
 from sklearn.model_selection import RandomizedSearchCV
@@ -45,7 +47,9 @@ def save_object(file_path, obj):
 
         with gzip.open(file_path,"wb") as file_obj:
             pickle.dump(obj,file_obj)
-
+        # joblib.dump(obj, file_path, compress=3)
+        # print(f"Object saved successfully at {file_path}")
+    
     except Exception as e:
         raise CustomException(e,sys)
     
@@ -112,6 +116,8 @@ def load_object(file_path):
     try:
         with gzip.open(file_path, "rb") as file_obj:
             return pickle.load(file_obj)
+        # Load the object using joblib
+        # return joblib.load(file_path)
 
     except Exception as e:
         raise CustomException(e, sys)
