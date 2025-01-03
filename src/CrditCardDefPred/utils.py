@@ -84,7 +84,7 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, params):
             # Initialize RandomizedSearchCV
             rs = RandomizedSearchCV(estimator=model,
                                     param_distributions=param_distributions,
-                                    n_iter=25,
+                                    n_iter=10,
                                     cv=5,
                                     scoring="accuracy",
                                     verbose=2,
